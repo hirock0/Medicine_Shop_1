@@ -1,3 +1,22 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "@typescript-eslint/no-unused-vars":"off",
+    "@typescript-eslint/no-unused-functions":"off",
+    "quotes": ["off"],
+    "curly": "error",
+    "react/no-unescaped-entities":"off",
+    "eqeqeq": "off",
+    "react/prop-types": "off",
+    "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "import/no-unresolved": "error",
+    "import/named": "off",
+    "import/default": "error",
+    "import/namespace": "off",
+    "import/no-named-as-default": ["off"],
+    " react-hooks/exhaustive-deps":["off"]
+
+  }
 }
