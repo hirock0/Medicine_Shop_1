@@ -6,12 +6,12 @@ import Link from 'next/link';
 import { useState,useEffect } from 'react'
 
 const categories = [
-    { name: "Respiratory", image: "/categories/respiratory-system.jpg",linkRoute:"/medicine/categories/respiratory" },
-    { name: "Digestive", image: "/categories/Digestive.jpg", linkRoute:"/medicine/categories/digestive" },
-    { name: "Skin Care", image: "/categories/skin_care_1.jpg",linkRoute:"/medicine/categories/skin_care" },
-    { name: "Allergy", image: "/categories/Alergies.jpg",linkRoute:"/medicine/categories/allergy" },
-    { name: "Pain Relief", image:"/categories/back_pain.jpg",linkRoute:"/medicine/categories/pain_relief" },
-    { name: "Immunity Boosters", image: "/categories/immunity_booster.png",linkRoute:"/medicine/categories/immunity_booster" },
+    { name: "Respiratory", image: "/categories/respiratory-system.jpg",linkRoute:`/medicine/categories/respiratory/?q=respiratory` },
+    { name: "Digestive", image: "/categories/Digestive.jpg", linkRoute:"/medicine/categories/digestive/?q=digestive" },
+    { name: "Skin Care", image: "/categories/skin_care_1.jpg",linkRoute:"/medicine/categories/skin_care/?q=skinCare" },
+    { name: "Allergy", image: "/categories/Alergies.jpg",linkRoute:"/medicine/categories/allergy/?q=allergy" },
+    { name: "Pain Relief", image:"/categories/back_pain.jpg",linkRoute:"/medicine/categories/pain_relief/?q=painRelief" },
+    { name: "Immunity Boosters", image: "/categories/immunity_booster.png",linkRoute:"/medicine/categories/immunity_booster/?q=immunityBoosters" },
   ];
 
 const HomePage = () => {

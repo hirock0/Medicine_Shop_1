@@ -13,8 +13,8 @@ const medicineData = new mongoose.Schema({
     doses:{type: String, ref: "doses", required: false},
     category:{type: String, ref: "category", required: false},
     dilution:{type: String, ref: "dilution", required: false},
-    
-    
+    likes:[],
+    comments:[],
     image_public_id:{type: String, ref: "image_public_id", required: false},
     dateField:{
         type:Date,
