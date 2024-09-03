@@ -4,17 +4,17 @@ import "./globals.css";
 import Nav from "@/components/nav/nav";
 import Footer from "@/components/footer/footer";
 import { Montserrat } from "next/font/google";
-import {Toaster} from "react-hot-toast"
+import { Toaster } from "react-hot-toast";
+import ReduxProvider from "@/utils/redux/reduxProvider";
 const montserrat = Montserrat({
-  weight:["400","400"],
-  subsets:["latin"]
-})
-
+  weight: ["400", "400"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Roy Homeopathy",
-  description: "homeopathy, homeopathic medicine, natural remedies, holistic healing, alternative medicine, homeopathic treatments, natural health, homeopathy online, safe medicines, homeopathy shop",
-  
+  description:
+    "homeopathy, homeopathic medicine, natural remedies, holistic healing, alternative medicine, homeopathic treatments, natural health, homeopathy online, safe medicines, homeopathy shop",
 };
 
 export default function RootLayout({
@@ -24,21 +24,22 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={montserrat.className}>
-       
-      <Toaster
-      
-      toastOptions={{
-        style:{
-          background:"rgb(0, 155, 255)",
-          color:"white"
-        }}}
-      />
-       
-        <Nav/>
-        {children}
-        <Footer/>
-      </body>
+      <ReduxProvider>
+        <body className={montserrat.className}>
+          <Toaster
+            toastOptions={{
+              style: {
+                background: "rgb(0, 155, 255)",
+                color: "white",
+              },
+            }}
+          />
+
+          <Nav />
+          {children}
+          <Footer />
+        </body>
+      </ReduxProvider>
     </html>
   );
 }
