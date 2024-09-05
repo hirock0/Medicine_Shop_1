@@ -11,10 +11,9 @@ import toast from "react-hot-toast";
 import { IoMdShare } from "react-icons/io";
 import Link from "next/link";
 
-
- const MedicineLinkShare = (props:any) => {
+const MedicineLinkShare = (props: any) => {
   const [isCopied, setIsCopied] = useState(false);
-  const id =props?.params?.shareLink.toString();
+  const id = props?.params?.shareLink.toString();
   const dispatch = useDispatch();
   const allMedicine = useSelector((state: any) => state?.Slice?.data);
   const medicines = allMedicine?.medicines;
@@ -25,8 +24,7 @@ import Link from "next/link";
       await navigator.clipboard.writeText(
         `http://localhost:3000/medicine/${id}`
       );
-      setIsCopied(true);
-      // Reset the copied state after 2 seconds
+
       toast.success("copy to clip-board");
       setTimeout(() => setIsCopied(false), 2000);
     } catch (error) {

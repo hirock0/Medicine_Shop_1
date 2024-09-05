@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { CgProfile } from "react-icons/cg";
 import { CiSettings } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
+import { CiLogin } from "react-icons/ci";
 import { useSelector } from "react-redux";
 const Nav = () => {
   const [themeFlag, setThemeFlag] = useState(false);
@@ -145,6 +146,15 @@ const Nav = () => {
                     />
                     <div className="">Theme</div>
                   </div>
+                </li>
+                <li>
+                  <Link href={"/user/login"}>
+                    <CiLogin
+                      size={25}
+                      className=" cursor-pointer select-none "
+                    />
+                    <div className="">Login</div>
+                  </Link>
                 </li>
                 <li>
                   <Link href={"#"}>
