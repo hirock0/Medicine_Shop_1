@@ -27,6 +27,7 @@ const[details,setDetails]=useState(false)
 
     return (
         <div className="  w-2/5 max-sm:w-1/2">
+            
                 <button onClick={()=>{onDrugDetails(),setDetails(!details)}} className=" btn btn-accent w-full ">
                       details
                 </button>
