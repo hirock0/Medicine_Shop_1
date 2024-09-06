@@ -5,8 +5,11 @@ import { Inter } from "next/font/google";
 import { FcGoogle } from "react-icons/fc";
 import { GrFacebookOption } from "react-icons/gr";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { TbEyeglass2 } from "react-icons/tb";
+import { TbEyeglassOff } from "react-icons/tb";
+import Link from "next/link";
 
 const inter = Inter({
   weight: ["400", "400"],
@@ -18,6 +21,13 @@ interface IFormInput {
   rememberMe: boolean;
 }
 const LoginPage = () => {
+
+
+
+
+  const[seePassword,setSeePassword]=useState(false)
+
+
   const {
     register,
     handleSubmit,
@@ -62,15 +72,15 @@ const LoginPage = () => {
     <main
       className={` ${Style.main}  flex items-center py-10  ${inter.className}`}
     >
-      <section className=" flex max-md:flex-col bg-slate-100 lg:w-5/6 rounded-sm">
+      <section className=" flex max-md:flex-col shadow-2xl bg-base-200 lg:w-5/6 rounded-sm">
         {/* ---------------------- */}
         <div className=" my-10 ">
-          <div className=" bg-white  p-5 rounded-md shadow-lg">
+          <div className=" bg-base-100 p-5 rounded-md shadow-lg">
             <h2 className=" text-xl font">Login</h2>
             <div className=" flex items-center sm:text-nowrap max-sm:flex-col">
               {" "}
               <p>Doesn't have an account yet?</p>{" "}
-              <button className=" text-primary">Sign Up</button>
+              <Link href={"/user/signup"}><button className=" text-primary">Sign Up</button></Link>
             </div>
             <form
               onSubmit={handleSubmit((data) => onLogin(data))}
@@ -95,15 +105,20 @@ const LoginPage = () => {
                   <h2>Password</h2>
                   <button className=" text-primary">Forgot Password?</button>
                 </div>
-
+                <div className=" w-full relative flex items-center">
                 <input
                   {...register("password", { required: "Need to fill up!" })}
-                  type="password"
+                  type={`${!seePassword?"password":"text"}`}
                   name="password"
                   id="password"
                   placeholder="Enter 6 character or more"
                   className="w-full p-2 text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
                 />
+                <button onClick={()=>setSeePassword(!seePassword)} className=" absolute right-5">
+                  <TbEyeglass2 size={20} className={`${!seePassword?"block":"hidden"}`}/>
+                  <TbEyeglassOff size={20}className={`${!seePassword?"hidden":"block"}`}/>
+                </button>
+                </div>
                 <div className="">
                   {errors.password && <p>{errors.password.message}</p>}
                 </div>

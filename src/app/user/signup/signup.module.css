@@ -1,0 +1,7 @@
+.left{
+    background: url("/images/manWithTablet.jpg");
+    
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
