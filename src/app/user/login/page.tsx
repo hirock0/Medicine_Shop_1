@@ -10,6 +10,9 @@ import Cookies from "js-cookie";
 import { TbEyeglass2 } from "react-icons/tb";
 import { TbEyeglassOff } from "react-icons/tb";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const inter = Inter({
   weight: ["400", "400"],
@@ -21,12 +24,9 @@ interface IFormInput {
   rememberMe: boolean;
 }
 const LoginPage = () => {
+  const router = useRouter();
 
-
-
-
-  const[seePassword,setSeePassword]=useState(false)
-
+  const [seePassword, setSeePassword] = useState(false);
 
   const {
     register,
@@ -49,6 +49,22 @@ const LoginPage = () => {
   };
 
   const onLogin: SubmitHandler<IFormInput> = async (data: any) => {
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+      });
+      if (!res?.ok) {
+        toast.success("password or email incorrect");
+      } else {
+        router.push("/");
+        router.refresh();
+      }
+    } catch (error: any) {
+      throw new Error("something went wrong", error);
+    }
+
     // Save to cookies if "Remember Me" is checked
     console.log(data.rememberMe);
     if (data.rememberMe) {
@@ -63,6 +79,10 @@ const LoginPage = () => {
 
     // Simulate login process (replace this with your authentication logic)
     //   console.log('User Logged In:', data);
+  };
+
+  const googleAuth = async () => {
+    signIn("google", { callbackUrl: "/" });
   };
   useEffect(() => {
     setCookies();
@@ -80,7 +100,11 @@ const LoginPage = () => {
             <div className=" flex items-center sm:text-nowrap max-sm:flex-col">
               {" "}
               <p>Doesn't have an account yet?</p>{" "}
-              <Link href={"/user/signup"}><button className=" text-primary">Sign Up</button></Link>
+              <Link href={"/user/signup"}>
+                <div className=" text-primary cursor-pointer select-none">
+                  Sign Up
+                </div>
+              </Link>
             </div>
             <form
               onSubmit={handleSubmit((data) => onLogin(data))}
@@ -103,21 +127,32 @@ const LoginPage = () => {
               <div className=" mt-5">
                 <div className=" flex items-center justify-between">
                   <h2>Password</h2>
-                  <button className=" text-primary">Forgot Password?</button>
+                  <div className=" text-primary cursor-pointer select-none">
+                    Forgot Password?
+                  </div>
                 </div>
                 <div className=" w-full relative flex items-center">
-                <input
-                  {...register("password", { required: "Need to fill up!" })}
-                  type={`${!seePassword?"password":"text"}`}
-                  name="password"
-                  id="password"
-                  placeholder="Enter 6 character or more"
-                  className="w-full p-2 text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
-                />
-                <button onClick={()=>setSeePassword(!seePassword)} className=" absolute right-5">
-                  <TbEyeglass2 size={20} className={`${!seePassword?"block":"hidden"}`}/>
-                  <TbEyeglassOff size={20}className={`${!seePassword?"hidden":"block"}`}/>
-                </button>
+                  <input
+                    {...register("password", { required: "Need to fill up!" })}
+                    type={`${!seePassword ? "password" : "text"}`}
+                    name="password"
+                    id="password"
+                    placeholder="Enter 6 character or more"
+                    className="w-full p-2 text-gray-900 bg-white border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500"
+                  />
+                  <div
+                    onClick={() => setSeePassword(!seePassword)}
+                    className=" absolute right-5 cursor-pointer select-none"
+                  >
+                    <TbEyeglass2
+                      size={20}
+                      className={`${!seePassword ? "block" : "hidden"}`}
+                    />
+                    <TbEyeglassOff
+                      size={20}
+                      className={`${!seePassword ? "hidden" : "block"}`}
+                    />
+                  </div>
                 </div>
                 <div className="">
                   {errors.password && <p>{errors.password.message}</p>}
@@ -143,7 +178,10 @@ const LoginPage = () => {
               <div className="border w-full h-[1px] bg-base-300 rounded-full"></div>
             </div>
             <div className=" flex justify-between gap-4 items-center">
-              <button className="  w-1/2 flex items-center justify-center gap-2 py-2 text-red-800 rounded-md border-warning border-2 hover:bg-slate-200  hover:border-slate-200 active:bg-slate-300">
+              <button
+                onClick={googleAuth}
+                className="  w-1/2 flex items-center justify-center gap-2 py-2 text-red-800 rounded-md border-warning border-2 hover:bg-slate-200  hover:border-slate-200 active:bg-slate-300"
+              >
                 <FcGoogle />
                 <h2>Google</h2>
               </button>

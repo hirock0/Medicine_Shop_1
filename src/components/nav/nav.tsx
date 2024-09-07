@@ -8,10 +8,22 @@ import { CgProfile } from "react-icons/cg";
 import { CiSettings } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { CiLogin } from "react-icons/ci";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { AllApiHandler } from "@/utils/redux/slices/slice";
+import { signOut } from "next-auth/react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 const Nav = () => {
+  const NextAuthSession = useSession();
+
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const AllReqData = useSelector((state: any) => state?.Slice);
+  const loggedUser = AllReqData?.data?.loggedUser;
+  const CartsData = AllReqData.carts;
   const [themeFlag, setThemeFlag] = useState(false);
-  const CartsData = useSelector((state: any) => state?.Slice.carts);
   const onTheme = () => {
     if (!themeFlag) {
       document.documentElement.setAttribute("data-theme", "light");
@@ -19,8 +31,28 @@ const Nav = () => {
       document.documentElement.setAttribute("data-theme", "dark");
     }
   };
+  const logOut = async () => {
+    try {
+      if (NextAuthSession?.status == "authenticated") {
+        signOut({ redirect: true, callbackUrl: "/ " });
+        toast.success("auth Logout successful!");
+      } else {
+        const logout = await axios.get("/pages/api/user/logout");
+        if (logout?.data.success) {
+          toast.success("Logout successful!");
+          router.push("/");
+          router.refresh();
+        } else {
+          toast.success("Logout not successful!");
+        }
+      }
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  };
 
   useEffect(() => {
+    dispatch(AllApiHandler());
     onTheme();
   }, [themeFlag]);
   return (
@@ -99,16 +131,24 @@ const Nav = () => {
               <div
                 tabIndex={0}
                 role="button"
-                className="btn btn-ghost btn-circle avatar"
+                className="btn btn-ghost btn-circle "
               >
-                <div className="w-10 rounded-full">
-                  <Image
-                    alt="Logo"
-                    src="/logos/medicine_logo.jpg"
-                    width={500}
-                    height={500}
-                  />
-                </div>
+                {loggedUser ? (
+                  <div
+                    className={` w-10 flex items-center justify-center relative rounded-full`}
+                  >
+                    <div className=" loading loading-ring loading-lg"></div>
+                    <Image
+                      alt="Logo"
+                      src={loggedUser?.userImageUrl.toString()}
+                      width={500}
+                      height={500}
+                      className=" w-5 h-5 absolute rounded-full"
+                    />
+                  </div>
+                ) : (
+                  <div className="">login</div>
+                )}
               </div>
               <ul
                 tabIndex={0}
@@ -147,24 +187,29 @@ const Nav = () => {
                     <div className="">Theme</div>
                   </div>
                 </li>
-                <li>
-                  <Link href={"/user/login"}>
-                    <CiLogin
-                      size={25}
-                      className=" cursor-pointer select-none "
-                    />
-                    <div className="">Login</div>
-                  </Link>
-                </li>
-                <li>
-                  <Link href={"#"}>
-                    <IoIosLogOut
-                      size={25}
-                      className=" cursor-pointer select-none "
-                    />
-                    <div className="">Logout</div>
-                  </Link>
-                </li>
+                {!loggedUser ? (
+                  <li>
+                    <Link href={"/user/login"}>
+                      <CiLogin
+                        size={25}
+                        className=" cursor-pointer select-none "
+                      />
+                      <div className="">Login</div>
+                    </Link>
+                  </li>
+                ) : null}
+                {loggedUser ? (
+                  <li
+                    onClick={() => {
+                      logOut();
+                    }}
+                  >
+                    <button>
+                      <IoIosLogOut size={25} className=" " />
+                      <div className="">Logout</div>
+                    </button>
+                  </li>
+                ) : null}
               </ul>
             </div>
             {/* drop_down_profile_end */}

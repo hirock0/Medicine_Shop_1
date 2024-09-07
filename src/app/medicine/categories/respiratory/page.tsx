@@ -21,7 +21,6 @@ const RespiratoryPage = (props: any) => {
   const dispatch = useDispatch();
   const allMedicines = useSelector((state: any) => state?.Slice.data);
   const medicines = allMedicines?.medicines;
-
   const onSearch = () => {
     const newUrl = new URLSearchParams(window.location.search);
     newUrl.set("search", searchData);

@@ -22,8 +22,10 @@ export const AllApiHandler: any = createAsyncThunk(
   async (data: any) => {
     try {
       const reqMedicines = await axios.get("/pages/api/upload");
+      const loggedData = await axios.get("/pages/api/user/userToken");
+      const loggedUser = loggedData?.data?.findUser;
       const medicines = reqMedicines?.data?.allMedicinesData;
-      return { medicines };
+      return { medicines, loggedUser };
     } catch (error: any) {
       return null;
     }

@@ -5,11 +5,11 @@ const userSchema = new mongoose.Schema({
 
     name:{type: String, ref: "name", required:[true, 'Name is required']},
     email:{type: String, unique:true, ref: "email", required:[true, 'Email is required']},
-    username:{type: String, ref: "username", required: [true, 'Username is required']},
-    password:{type: String, ref: "password", required:[true, 'Password is required']},
+    username:{type: String, ref: "username", required: false},
+    password:{type: String, ref: "password", required:false},
     user_terms:{type: String, ref: "user_terms", required:false},
     userImageUrl:{type: String, ref: "userImage", required:[true, 'User Image Url is required']},
-    image_public_id:{type: String, ref: "image_public_id", required:[true, 'Public Id is required']},
+    image_public_id:{type: String, ref: "image_public_id", required:false},
     address:{
         village:{type: String, ref: "village", required:false},
         thana:{type: String, ref: "thana", required:false},

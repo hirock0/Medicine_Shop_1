@@ -197,12 +197,3 @@ const Pain_reliefPage = (props: any) => {
 };
 
 export default Pain_reliefPage;
-
-
-
-
-
-
-
-
-

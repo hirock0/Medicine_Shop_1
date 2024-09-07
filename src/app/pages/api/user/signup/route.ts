@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     const saveData = await preSaved.save();
 
     const tokenData = {
-      id: saveData._id,
+      _id: saveData._id,
       name: saveData.name,
       email: saveData.email,
     };
@@ -67,18 +67,19 @@ export async function POST(request: NextRequest) {
     });
   }
 }
-// export async function GET(request:NextRequest,response:any){
-//   try{
-//     await dbConnect()
-//     const allMedicinesData = await allMedicines.find().sort({dateField:-1})
-//     return NextResponse.json({
-//       message: "File is found",
-//       success: true,allMedicinesData
-//     });
-//   }catch(error:any){
-//     return NextResponse.json({
-//       message: "File is not found",
-//       success: false,
-//     });
-//   }
-// }
+export async function GET(request: NextRequest, response: any) {
+  try {
+    await dbConnect();
+    const allMedicinesData = await allMedicines.find().sort({ dateField: -1 });
+    return NextResponse.json({
+      message: "File is found",
+      success: true,
+      allMedicinesData,
+    });
+  } catch (error: any) {
+    return NextResponse.json({
+      message: "File is not found",
+      success: false,
+    });
+  }
+}
