@@ -22,7 +22,7 @@ const MedicineLinkShare = (props: any) => {
   const ShareLink = async (id: any) => {
     try {
       await navigator.clipboard.writeText(
-        `http://localhost:3000/medicine/${id}`
+        `https://medicine-shop-1.vercel.app/medicine/${id}`
       );
 
       toast.success("copy to clip-board");

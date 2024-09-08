@@ -7,16 +7,16 @@ interface Props {
 }
 
 const CopyLinkBtn: React.FC<Props> = ({ item }) => {
+
+
   const [onCopyBtn, setOnCopyBtn] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
-
   const ShareLink = async (id: any) => {
-    // const facebookShareUrl = `http://localhost:3000/medicine/${id}`;
-    // window.open(facebookShareUrl, '_blank', 'noopener,noreferrer');
 
     try {
       await navigator.clipboard.writeText(
-        `http://localhost:3000/medicine/${id}`
+        
+        `https://medicine-shop-1.vercel.app/medicine/${id}`
       );
       setIsCopied(true);
       // Reset the copied state after 2 seconds
