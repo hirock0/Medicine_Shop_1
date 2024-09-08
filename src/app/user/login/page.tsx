@@ -127,9 +127,9 @@ const LoginPage = () => {
               <div className=" mt-5">
                 <div className=" flex items-center justify-between">
                   <h2>Password</h2>
-                  <div className=" text-primary cursor-pointer select-none">
+                  <Link href={"/user/forgot_password"} className=" text-primary cursor-pointer select-none">
                     Forgot Password?
-                  </div>
+                  </Link>
                 </div>
                 <div className=" w-full relative flex items-center">
                   <input

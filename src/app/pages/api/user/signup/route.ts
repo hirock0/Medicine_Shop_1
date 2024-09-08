@@ -4,6 +4,7 @@ import cloudinary from "@/lib/cloudinary/cloudinary";
 import { allMedicines, userSchemaStr } from "@/lib/Schema/model";
 import bcryptjs from "bcryptjs";
 import Jwt from "jsonwebtoken";
+import { sendEmail } from "@/helper/mailer/mailer";
 export async function POST(request: NextRequest) {
   try {
     await dbConnect();
@@ -43,7 +44,6 @@ export async function POST(request: NextRequest) {
     });
 
     const saveData = await preSaved.save();
-
     const tokenData = {
       _id: saveData._id,
       name: saveData.name,

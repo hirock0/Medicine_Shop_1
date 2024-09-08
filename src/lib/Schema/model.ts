@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
     contact:{type: String, ref: "contact", required:false},
     total_buy_medicine:[],
     recentDate: { type: String, ref: "userImg", required:false},
-    isVerify: {
+    isVerified: {
       type: Boolean,
       default: false,
     },
