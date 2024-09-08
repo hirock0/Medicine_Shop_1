@@ -112,7 +112,7 @@ const LoginPage = () => {
             >
               <div className="">
                 <h2>Email Address</h2>
-                {/* <input type="email" name="email" id="email" placeholder="you@example.com" className=" w-full h-10 pl-2 rounded-md outline-none border border-black  "  /> */}
+          
                 <input
                   {...register("email", { required: "Need to fill up!" })}
                   type="email"
