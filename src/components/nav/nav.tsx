@@ -72,13 +72,6 @@ const Nav = () => {
               </Link>
             </motion.div>
           </div>
-          <div className="flex-none">
-            <div>
-              <div>
-                <Link href={"/admin/upload/medicine"}>admin</Link>
-              </div>
-            </div>
-            <div className="dropdown dropdown-end">
               {/* ---------------------------------- */}
 
               {/* ---------------------------------- */}
