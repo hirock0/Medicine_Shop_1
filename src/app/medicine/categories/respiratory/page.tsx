@@ -179,7 +179,7 @@ const RespiratoryPage = (props: any) => {
                 </>
               ) : (
                 // loading_part_start
-                <div className=" h-[90vh]  flex items-center justify-center">
+                <div className=" h-[90vh]   flex items-center justify-center">
                   <div className="">
                     <span className="  loading loading-dots loading-lg  "></span>
                   </div>

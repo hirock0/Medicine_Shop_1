@@ -26,6 +26,7 @@ interface IFormInput {
 const LoginPage = () => {
   const router = useRouter();
 
+  const[isLoading,setIsLoading]=useState(false)
   const [seePassword, setSeePassword] = useState(false);
 
   const {
@@ -50,23 +51,30 @@ const LoginPage = () => {
 
   const onLogin: SubmitHandler<IFormInput> = async (data: any) => {
     try {
+      setIsLoading(true)
       const res = await signIn("credentials", {
         redirect: false,
         email: data.email,
         password: data.password,
       });
+
       if (!res?.ok) {
         toast.success("password or email incorrect");
       } else {
-        router.push("/");
-        router.refresh();
+        setTimeout(()=>{
+          toast.success("Login successful!");
+          router.push("/");
+          router.refresh();
+          setIsLoading(false)
+        },1000)
+
       }
+
+
     } catch (error: any) {
       throw new Error("something went wrong", error);
     }
 
-    // Save to cookies if "Remember Me" is checked
-    console.log(data.rememberMe);
     if (data.rememberMe) {
       Cookies.set("email", data.email, { expires: 7 }); // Expires in 7 days
       Cookies.set("password", data.password, { expires: 7 });
@@ -77,8 +85,6 @@ const LoginPage = () => {
       Cookies.remove("rememberMe");
     }
 
-    // Simulate login process (replace this with your authentication logic)
-    //   console.log('User Logged In:', data);
   };
 
   const googleAuth = async () => {
@@ -168,7 +174,7 @@ const LoginPage = () => {
               </div>
               <div className="mt-5">
                 <button type="submit" className=" btn btn-primary w-full">
-                  Login
+                  {!isLoading?"Login":<span className="loading loading-spinner loading-sm"></span>}
                 </button>
               </div>
             </form>

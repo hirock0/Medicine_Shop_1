@@ -63,10 +63,10 @@ const HomePage = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl font-extrabold text-primary mb-6 max-md:text-3xl">
+          <h2 className="text-4xl font-extrabold text-primary mb-5 max-md:text-2xl">
             Explore Our Medicine Categories
           </h2>
-          <p className="text-lg text-warning mb-8 ">
+          <p className="text-lg  mb-8 leading-5 ">
             Discover various homeopathic categories tailored to your needs.
           </p>
           <input

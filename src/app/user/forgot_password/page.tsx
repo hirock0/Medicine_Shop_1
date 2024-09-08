@@ -15,7 +15,7 @@ const Forgot_passwordPage = () => {
         const email = data.email
        const reqApi = await axios.post("/pages/api/user/forgot_password",{email})
        if(reqApi?.data.success){
-        toast.success("Account is found")
+        toast.success("Account is found, please check your email.")
         // router.push("/user/verifyemail")
        }
        else{

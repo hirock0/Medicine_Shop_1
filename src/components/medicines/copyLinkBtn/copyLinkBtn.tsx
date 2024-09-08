@@ -7,15 +7,11 @@ interface Props {
 }
 
 const CopyLinkBtn: React.FC<Props> = ({ item }) => {
-
-
   const [onCopyBtn, setOnCopyBtn] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const ShareLink = async (id: any) => {
-
     try {
       await navigator.clipboard.writeText(
-        
         `https://medicine-shop-1.vercel.app/medicine/${id}`
       );
       setIsCopied(true);
