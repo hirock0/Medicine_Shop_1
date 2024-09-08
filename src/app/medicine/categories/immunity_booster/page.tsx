@@ -71,7 +71,7 @@ const Immunity_boosterPage = (props: any) => {
     <main className=" py-10">
       <section>
         <div className=" ">
-          <h1 className="text-4xl font-bold text-center">
+          <h1 className="text-3xl max-md:text-2xl max-sm:text-xl font-bold text-center">
             {searchRoute.toUpperCase() || ""}
           </h1>
 
