@@ -13,7 +13,7 @@ import Link from "next/link";
 import { signIn } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-
+import LoginImage from '../../../../public/images/Login.png'
 const inter = Inter({
   weight: ["400", "400"],
   subsets: ["latin"],
@@ -195,10 +195,12 @@ const LoginPage = () => {
         {/* ---------------------- */}
         <div className="  w-full flex items-center justify-center">
           <Image
-            src={"/images/login.png"}
+            src={LoginImage}
+            priority
             alt="login"
             width={500}
             height={500}
+        
           />
         </div>
       </section>
