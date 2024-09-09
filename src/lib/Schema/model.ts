@@ -79,3 +79,13 @@ const medicineData = new mongoose.Schema({
 export const allMedicines = mongoose.models.medicines || mongoose.model("medicines", medicineData);
 
 
+const CartsData = new mongoose.Schema({
+  carts:[],
+  recentDate:{type: String, ref: "recentDate", required: [true, ' Recent Date is required']},
+  dateField:{
+    type:Date,
+    default:Date.now,
+    required: false,
+}, 
+})
+export const CartsStr = mongoose.models.carts || mongoose.model("carts", CartsData);

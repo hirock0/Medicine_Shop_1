@@ -23,6 +23,7 @@ const Nav = () => {
   const AllReqData = useSelector((state: any) => state?.Slice);
   const loggedUser = AllReqData?.data?.loggedUser;
   const CartsData = AllReqData.carts;
+  console.log(CartsData)
   const [themeFlag, setThemeFlag] = useState(false);
   const onTheme = () => {
     if (!themeFlag) {

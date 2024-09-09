@@ -38,6 +38,7 @@ const VerifyemailPage = (props: any) => {
           reset();
         }, 1000);
       } else {
+        setIsLoading(false);
         toast.success("something went wrong!");
       }
     }

@@ -84,61 +84,55 @@ const HomePage = () => {
           initial="initial"
           animate="animate"
         >
-            {
-                filteredCategories.length !== 0?(
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-            variants={{
-              initial: {},
-              animate: { transition: { staggerChildren: 0.2 } },
-            }}
-          >
-            {
-            
-            filteredCategories.map((category, index) => (
-              <motion.div
-                key={index}
-                className="card bg-base-100 shadow-xl transform hover:scale-105  transition duration-300"
-                whileHover={{ scale: 1.05 }}
-                variants={{
-                  initial: { opacity: 0, y: 20 },
-                  animate: { opacity: 1, y: 0 },
-                }}
-              >
-                <figure className=" ">
-                  <Image
-                    src={category.image}
-                    alt={category.name}
-                    priority
-                    width={500}
-                    height={500}
-                    className="  w-full object-cover md:h-[500px] "
-                  />
-                </figure>
-                <div className="card-body">
-                  <h3 className="card-title">{category.name}</h3>
-                  <p>
-                    Explore our {category.name} category for the best natural
-                    remedies.
-                  </p>
-                  <Link
-                    href={category?.linkRoute}
-                    className="btn btn-primary btn-sm"
-                  >
-                    <button className=" w-full h-full">View Products</button>
-                  </Link>
-                </div>
-              </motion.div>
-            ))
-            }
-          </motion.div>
-                    ):(
-                        <div className=" h-[100vh] flex  justify-center">
-                            <h2 className=" ">Data not available!</h2>
-                        </div>
-                    )
-                    }
-
+          {filteredCategories.length !== 0 ? (
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              variants={{
+                initial: {},
+                animate: { transition: { staggerChildren: 0.2 } },
+              }}
+            >
+              {filteredCategories.map((category, index) => (
+                <motion.div
+                  key={index}
+                  className="card bg-base-100 shadow-xl transform hover:scale-105  transition duration-300"
+                  whileHover={{ scale: 1.05 }}
+                  variants={{
+                    initial: { opacity: 0, y: 20 },
+                    animate: { opacity: 1, y: 0 },
+                  }}
+                >
+                  <figure className=" ">
+                    <Image
+                      src={category.image}
+                      alt={category.name}
+                      priority
+                      width={500}
+                      height={500}
+                      className="  w-full object-cover md:h-[500px] "
+                    />
+                  </figure>
+                  <div className="card-body">
+                    <h3 className="card-title">{category.name}</h3>
+                    <p>
+                      Explore our {category.name} category for the best natural
+                      remedies.
+                    </p>
+                    <Link
+                      href={category?.linkRoute}
+                      className="btn btn-primary btn-sm"
+                    >
+                      <button className=" w-full h-full">View Products</button>
+                    </Link>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <div className=" h-[100vh] flex  justify-center">
+              <h2 className=" ">Data not available!</h2>
+            </div>
+          )}
         </motion.div>
       </div>
     </div>

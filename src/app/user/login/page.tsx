@@ -59,6 +59,7 @@ const LoginPage = () => {
       });
 
       if (!res?.ok) {
+        setIsLoading(false)
         toast.success("password or email incorrect");
       } else {
         setTimeout(()=>{

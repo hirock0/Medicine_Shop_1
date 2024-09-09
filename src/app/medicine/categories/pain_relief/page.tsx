@@ -12,6 +12,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { CiSearch } from "react-icons/ci";
+import Carts from "@/components/medicines/carts/carts";
 const Pain_reliefPage = (props: any) => {
   const searchRoute = props?.searchParams.q || "";
   const search = props?.searchParams.search || "";
@@ -135,12 +136,7 @@ const Pain_reliefPage = (props: any) => {
                               {item?.medicinePrice} TK
                             </h2>
                             <div className="mt-4 flex justify-between max-sm:flex-col max-sm:items-center gap-5 ">
-                              <button
-                                className="btn btn-primary w-2/5 max-sm:w-1/2   "
-                                onClick={() => dispatch(addCart(item))}
-                              >
-                                Add to Cart
-                              </button>
+                              <Carts item={item}/>
                               <Link
                                 href={`/medicine/details/${item?._id}`}
                                 className="  w-2/5 max-sm:w-1/2"

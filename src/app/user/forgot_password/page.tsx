@@ -43,6 +43,7 @@ const Forgot_passwordPage = () => {
         setCheckEmailFlag(true)
       }, 1000);
     } else {
+      setIsLoading(false);
       toast.success("Account is not found");
     }
   };
@@ -51,7 +52,7 @@ const Forgot_passwordPage = () => {
     <main className={`${inter.className} min-h-screen`}>
       <section className=" ">
         {!checkEmailFlag ? (
-          <div className=" rounded-md bg-base-100 shadow-lg lg:w-1/2 mx-auto md:w-4/6  mt-10 p-5">
+          <div className=" rounded-md bg-base-100 shadow-lg lg:w-1/2 mx-auto md:w-4/6  mt-10  p-5">
             <h2 className=" text-center text-3xl font-semibold max-md:text-2xl max-sm:text-xl">
               Finding account put you right emil.
             </h2>
