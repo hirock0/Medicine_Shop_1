@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCart } from "@/utils/redux/slices/slice";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface Props {
   item: object | any;
@@ -37,14 +38,30 @@ const Carts: React.FC<Props> = ({ item }) => {
   };
 
   return (
-    <button
-      className="btn btn-primary w-2/5 max-sm:w-1/2   "
-      onClick={() => {
-        onCarts(), dispatch(addCart(CartsData));
-      }}
-    >
-      Add to Cart
-    </button>
+    <>
+      {loggedUser !== undefined ? (
+        <button
+          className="btn btn-primary w-2/5 max-sm:w-1/2   "
+          onClick={() => {
+            onCarts(), dispatch(addCart(CartsData));
+          }}
+        >
+          Add to Cart
+        </button>
+      ) : (
+        <button
+          className="btn btn-primary w-2/5 max-sm:w-1/2   "
+          onClick={() => {
+            toast.success("Please login first"),
+              setTimeout(() => {
+                router.push("/user/login");
+              }, 1000);
+          }}
+        >
+          Add to Cart
+        </button>
+      )}
+    </>
   );
 };
 

@@ -15,17 +15,29 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { MdMenu } from "react-icons/md";
 const Nav = () => {
   const NextAuthSession = useSession();
 
   const [themeFlag, setThemeFlag] = useState(false);
   const [cartsFlag, setCartsFlag] = useState(false);
+  const [hamFlag, setHamFlag] = useState(false);
+
   const router = useRouter();
   const dispatch = useDispatch();
   const AllReqData = useSelector((state: any) => state?.Slice);
   const loggedUser = AllReqData?.data?.loggedUser;
+
   const CartsData = AllReqData?.data?.AllCarts;
-  const total = CartsData?.reduce(
+  const filterCarts = CartsData?.filter((item: any) => {
+    if (loggedUser?._id == undefined) {
+      return null;
+    } else {
+      return item?.userId == loggedUser?._id;
+    }
+  });
+
+  const total = filterCarts?.reduce(
     (acc: any, item: any) => acc + Number(item.medicinePrice),
     0
   );
@@ -60,6 +72,7 @@ const Nav = () => {
   const windowClickingEvent = () => {
     window.addEventListener("click", () => {
       setCartsFlag(false);
+      setHamFlag(false);
     });
   };
 
@@ -72,7 +85,8 @@ const Nav = () => {
     <nav className="  sticky top-0 z-50 border-b-2 h-20 flex items-center  backdrop:filter backdrop-blur-3xl">
       <section className=" ">
         <div className="navbar ">
-          <div className="flex-1">
+          {/* ------------------------- */}
+          <div className="flex-1 max-md:hidden">
             <motion.div
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -85,7 +99,39 @@ const Nav = () => {
               </Link>
             </motion.div>
           </div>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="flex-1 hidden max-md:block"
+          >
+            <button onClick={(e) => setHamFlag(!hamFlag)}>
+              <MdMenu size={30} />
+            </button>
+          </div>
+
+          {/* ------------------------ */}
           <div className="flex-none">
+            {/* ------------------------------------ */}
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className={` max-md:h-screen  max-md:fixed max-md:left-0 max-md:top-20  max-md:bg-base-100  max-md:px-10 max-md:pt-5 max-md:shadow-lg ${
+                !hamFlag ? "max-md:-translate-x-full " : "max-md:translate-x-0 "
+              } md:translate-x-0 max-md:transition-all  `}
+            >
+              <ul className={`flex gap-5 max-md:flex-col  max-md:h-full  `}>
+                <Link href={""}>
+                  <li>About Us</li>
+                </Link>
+                <Link href={""}>
+                  <li>Contacts</li>
+                </Link>
+                <Link href={""}>
+                  <li>Live Chat</li>
+                </Link>
+              </ul>
+            </div>
+
+            {/* ------------------------------------ */}
+            {/* ------------------------------------ */}
             <div className="dropdown dropdown-end">
               {/* ---------------------------------- */}
 
@@ -111,7 +157,7 @@ const Nav = () => {
                     />
                   </svg>
                   <span className="badge badge-sm indicator-item">
-                    {CartsData?.length}
+                    {filterCarts?.length}
                   </span>
                 </div>
               </div>
@@ -123,11 +169,12 @@ const Nav = () => {
               >
                 <div className="card-body">
                   <span className="text-lg font-bold">
-                    {CartsData?.length} Items
+                    {filterCarts?.length} Items
                   </span>
                   <span className="text-info">Subtotal: ${total}</span>
                   <div className="card-actions">
                     <button
+                      disabled={loggedUser == undefined ? true : false}
                       onClick={(e) => setCartsFlag(!cartsFlag)}
                       className="btn btn-primary btn-block"
                     >
@@ -141,7 +188,7 @@ const Nav = () => {
                   } overflow-y-scroll p-2 h-96 `}
                 >
                   <div className=" flex flex-col items-center gap-4">
-                    {CartsData?.map((item: any, index: any) => (
+                    {filterCarts?.map((item: any, index: any) => (
                       <div
                         key={index}
                         className=" bg-base-300 flex flex-col items-center rounded-md p-2"
