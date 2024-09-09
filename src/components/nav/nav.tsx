@@ -18,13 +18,18 @@ import { useSession } from "next-auth/react";
 const Nav = () => {
   const NextAuthSession = useSession();
 
+  const [themeFlag, setThemeFlag] = useState(false);
+  const [cartsFlag, setCartsFlag] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
   const AllReqData = useSelector((state: any) => state?.Slice);
   const loggedUser = AllReqData?.data?.loggedUser;
-  const CartsData = AllReqData.carts;
-  console.log(CartsData)
-  const [themeFlag, setThemeFlag] = useState(false);
+  const CartsData = AllReqData?.data?.AllCarts;
+  const total = CartsData?.reduce(
+    (acc: any, item: any) => acc + Number(item.medicinePrice),
+    0
+  );
+
   const onTheme = () => {
     if (!themeFlag) {
       document.documentElement.setAttribute("data-theme", "light");
@@ -52,9 +57,16 @@ const Nav = () => {
     }
   };
 
+  const windowClickingEvent = () => {
+    window.addEventListener("click", () => {
+      setCartsFlag(false);
+    });
+  };
+
   useEffect(() => {
     dispatch(AllApiHandler());
     onTheme();
+    windowClickingEvent();
   }, [themeFlag]);
   return (
     <nav className="  sticky top-0 z-50 border-b-2 h-20 flex items-center  backdrop:filter backdrop-blur-3xl">
@@ -107,16 +119,58 @@ const Nav = () => {
               <div
                 tabIndex={0}
                 className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow"
+                onClick={(e) => e.stopPropagation()}
               >
                 <div className="card-body">
                   <span className="text-lg font-bold">
                     {CartsData?.length} Items
                   </span>
-                  <span className="text-info">Subtotal: $999</span>
+                  <span className="text-info">Subtotal: ${total}</span>
                   <div className="card-actions">
-                    <button className="btn btn-primary btn-block">
+                    <button
+                      onClick={(e) => setCartsFlag(!cartsFlag)}
+                      className="btn btn-primary btn-block"
+                    >
                       View cart
                     </button>
+                  </div>
+                </div>
+                <div
+                  className={`${
+                    !cartsFlag ? "hidden" : "block"
+                  } overflow-y-scroll p-2 h-96 `}
+                >
+                  <div className=" flex flex-col items-center gap-4">
+                    {CartsData?.map((item: any, index: any) => (
+                      <div
+                        key={index}
+                        className=" bg-base-300 flex flex-col items-center rounded-md p-2"
+                      >
+                        <Image
+                          src={item?.medicineImage}
+                          alt="img"
+                          width={500}
+                          height={500}
+                        />
+                        <h2 className=" text-center flex items-center gap-1">
+                          {item?.medicineName}
+                          <span>{item?.medicinePotency}</span>
+                        </h2>
+                        <div className=" flex items-center gap-2 w-full mt-2">
+                          <Link
+                            href={`/medicine/details/${item?.medicineId}`}
+                            className=" w-full  "
+                          >
+                            <button className=" bg-accent w-full rounded-md text-xs py-2 ">
+                              details
+                            </button>
+                          </Link>
+                          <button className=" w-full bg-warning rounded-md text-xs py-2  ">
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
