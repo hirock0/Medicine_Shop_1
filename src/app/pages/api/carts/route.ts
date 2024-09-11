@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
   }
 }
 export async function GET() {
+  await dbConnect();
   try {
     const findCarts = await CartsStr.find().sort({ dateField: -1 });
 

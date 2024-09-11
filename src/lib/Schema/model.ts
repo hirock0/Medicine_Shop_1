@@ -26,6 +26,7 @@ const userSchema = new mongoose.Schema(
     },
     contact: { type: String, ref: "contact", required: false },
     total_buy_medicine: [],
+    chats:[],
     recentDate: { type: String, ref: "userImg", required: false },
     isVerified: {
       type: Boolean,
@@ -147,3 +148,10 @@ const CartsData = new mongoose.Schema({
 });
 export const CartsStr =
   mongoose.models.carts || mongoose.model("carts", CartsData);
+
+
+
+
+
+
+

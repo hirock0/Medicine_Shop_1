@@ -41,6 +41,7 @@ export async function POST(request: NextRequest) {
         country: "",
       },
       contact: "",
+      chats:[]
     });
 
     const saveData = await preSaved.save();

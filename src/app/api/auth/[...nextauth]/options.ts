@@ -73,6 +73,7 @@ export const authOption: NextAuthOptions = {
               country: "",
             },
             contact: "",
+            chats:[]
           });
           const SaveData = await PreSavedData.save();
           return SaveData;

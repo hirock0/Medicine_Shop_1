@@ -16,6 +16,8 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { MdMenu } from "react-icons/md";
+import { RxDashboard } from "react-icons/rx";
+import Carts_delete from "./cartsDelete/carts_delete";
 const Nav = () => {
   const NextAuthSession = useSession();
 
@@ -113,20 +115,28 @@ const Nav = () => {
             {/* ------------------------------------ */}
             <div
               onClick={(e) => e.stopPropagation()}
-              className={` max-md:h-screen  max-md:fixed max-md:left-0 max-md:top-20  max-md:bg-base-100  max-md:px-10 max-md:pt-5 max-md:shadow-lg ${
+              className={` max-md:h-screen  max-md:fixed max-md:left-0 max-md:top-20  max-md:bg-base-200 max-md:w-52 max-sm:w-40 max-md:px-5 max-md:pt-5 max-md:shadow-lg max-md:overflow-y-scroll ${
                 !hamFlag ? "max-md:-translate-x-full " : "max-md:translate-x-0 "
               } md:translate-x-0 max-md:transition-all  `}
             >
+              {/* ------------------------------ */}
               <ul className={`flex gap-5 max-md:flex-col  max-md:h-full  `}>
                 <Link href={""}>
-                  <li>About Us</li>
+                  <li className="max-md:w-full max-md:pl-2 max-md:py-2 max-md:rounded-md max-md:hover:bg-base-300 max-md:bg-base-100 max-md:shadow-lg max-md:active:bg-slate-400">
+                    About Us
+                  </li>
                 </Link>
                 <Link href={""}>
-                  <li>Contacts</li>
+                  <li className="max-md:w-full max-md:pl-2 max-md:py-2 max-md:rounded-md max-md:hover:bg-base-300 max-md:bg-base-100 max-md:shadow-lg max-md:active:bg-slate-400">
+                    Contacts
+                  </li>
                 </Link>
                 <Link href={""}>
-                  <li>Live Chat</li>
+                  <li className="max-md:w-full max-md:pl-2 max-md:py-2 max-md:rounded-md max-md:hover:bg-base-300 max-md:bg-base-100 max-md:shadow-lg max-md:active:bg-slate-400">
+                    Store
+                  </li>
                 </Link>
+                {/* ------------------------------------------- */}
               </ul>
             </div>
 
@@ -212,9 +222,7 @@ const Nav = () => {
                               details
                             </button>
                           </Link>
-                          <button className=" w-full bg-warning rounded-md text-xs py-2  ">
-                            Delete
-                          </button>
+                          <Carts_delete itemId={item?._id} />
                         </div>
                       </div>
                     ))}
@@ -263,6 +271,20 @@ const Nav = () => {
                     </div>
                   </Link>
                 </li>
+
+                <li>
+                  <Link href={"#"} className="">
+                    <RxDashboard
+                      size={25}
+                      className=" cursor-pointer select-none "
+                    />
+                    <div className="justify-between">
+                      Dashboard
+                      <span className="badge">New</span>
+                    </div>
+                  </Link>
+                </li>
+
                 <li>
                   <Link href={"#"}>
                     <CiSettings
@@ -307,6 +329,8 @@ const Nav = () => {
                     </button>
                   </li>
                 ) : null}
+
+                {/* ------------------------------------------- */}
               </ul>
             </div>
             {/* drop_down_profile_end */}

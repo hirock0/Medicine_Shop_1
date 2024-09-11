@@ -1,7 +1,5 @@
 "use client";
-
 import { AllApiHandler } from "@/utils/redux/slices/slice";
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addCart } from "@/utils/redux/slices/slice";
 import axios from "axios";
@@ -31,6 +29,11 @@ const Carts: React.FC<Props> = ({ item }) => {
   const onCarts = async () => {
     try {
       const response = await axios.post("/pages/api/carts", CartsData);
+      if (response?.data.success) {
+        toast.success("You have added medicine to cart.");
+      } else {
+        toast.success("something went wrong!");
+      }
     } catch (error: any) {
       throw new Error(error);
     }

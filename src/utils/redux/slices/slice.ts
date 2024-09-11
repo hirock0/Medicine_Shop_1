@@ -20,18 +20,20 @@ const initialState: InitialState = {
 export const AllApiHandler: any = createAsyncThunk(
   "AllApiHandler",
   async (data: any) => {
-
     try {
       const reqMedicines = await axios.get("/pages/api/upload");
       const medicines = reqMedicines?.data?.allMedicinesData;
-      
+
       const loggedData = await axios.get("/pages/api/user/userToken");
       const loggedUser = loggedData?.data?.findUser;
 
-      const Carts = await axios.get("/pages/api/carts")
+      const Carts = await axios.get("/pages/api/carts");
       const AllCarts = Carts?.data?.findCarts;
 
-      return { medicines, loggedUser,AllCarts};
+      const AllUsers = await axios.get("/pages/api/user/allUsers");
+      const allUsers = AllUsers?.data?.finUsers;
+
+      return { medicines, loggedUser, AllCarts, allUsers };
     } catch (error: any) {
       return null;
     }
@@ -55,7 +57,11 @@ export const Slice = createSlice({
       const Cart = action.payload;
       state?.carts.AllCarts.push(Cart);
     },
-    deleteCart: (state: any, action: PayloadAction<any>) => {},
+    deleteCart: (state: any, action: PayloadAction<any>) => {
+      state.data.AllCarts = state?.data.AllCarts.filter(
+        (item: any) => item?._id !== action.payload
+      );
+    },
   },
 
   extraReducers(builder) {
